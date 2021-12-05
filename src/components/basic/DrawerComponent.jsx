@@ -13,17 +13,11 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import { drawerWidth } from '../../resources/values';
 import { getAuth, signOut } from '@firebase/auth'
 import { Typography } from '@mui/material';
-import BoltOutlinedIcon from '@mui/icons-material/BoltOutlined';
 
 
 export default function DrawerComponent({ mobileOpen, handleDrawerToggle }) {
   const auth = getAuth();
 
-  const handleSignOut = () => {
-    signOut(auth).then(() => {
-    }).catch((error) => {
-    });
-  }
   const listItems1 = [
     { name: 'Events', icon: <CalendarTodayOutlinedIcon />, to:'events' },
     { name: 'Mitglieder', icon: <GroupOutlinedIcon />, to: 'mitglieder' },
