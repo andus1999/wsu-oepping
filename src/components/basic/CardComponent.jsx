@@ -3,9 +3,9 @@ import React from 'react'
 
 export default function CardComponent({children}) {
   return (
-    <Box sx={{ width: '90%', maxWidth: '700px' }}>
+    <Box sx={{ width: '100%', maxWidth: '700px' }}>
       <Card variant='outlined'>
-        <Stack alignItems='center' gap='30px' padding='30px'>
+        <Stack alignItems='center' gap='20px' padding='5%'>
             {children}
         </Stack>
       </Card>

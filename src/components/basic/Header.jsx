@@ -12,6 +12,7 @@ export default function Header({handleDrawerToggle}) {
         direction='row'
         gap='20px'
         sx={{
+          top: 0,
           justifyContent: { xs: 'flex-start', sm: 'space-around' },
           zIndex: 1300,
           position: 'fixed', 
@@ -30,10 +31,10 @@ export default function Header({handleDrawerToggle}) {
             </IconButton>
           </Box>
         }
-        <Typography variant='h4' color='primary'>
-          WSU
+        <Typography variant='h5' color='primary'>
+          WSU Oepping
         </Typography>
-        <AcUnitOutlinedIcon />
+        <AcUnitOutlinedIcon sx={{display: {xs: 'none', sm: 'block'}}} />
       </Stack>
       <Box sx={{
         height: '80px',

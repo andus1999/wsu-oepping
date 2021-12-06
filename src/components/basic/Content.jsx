@@ -6,9 +6,9 @@ export default function Content({ children }) {
   return (
     <Box 
       sx={{
-        marginLeft: {xs: '0px', md: `${drawerWidth}px`},
-        padding: '20px'}
-      }
+        marginLeft: {xs: '0px', sm: `${drawerWidth}px`},
+        padding: '3%'
+      }}
     >
       {children}
     </Box>

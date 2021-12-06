@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import { Button, Stack, Box, Divider } from '@mui/material';
+import { Button, Stack, Box, Divider, Link } from '@mui/material';
 import Footer from '../components/basic/Footer';
 import UiOverlay from '../components/basic/UiOverlay';
 import Content from '../components/basic/Content';
@@ -20,7 +20,8 @@ export default function Home() {
     return () => clearTimeout(timeout)
   },[imgUrl])
 
-  const embedId = '6T-QUo_0xtQ';
+  const channelId = 'UCdVMBy8y3RsGxb5wqodHIBg';
+  const staticStreamUrl = `https://www.youtube.com/channel/${channelId}/live`;
   return (
     <>
       <UiOverlay />
@@ -30,16 +31,17 @@ export default function Home() {
           gap='40px' 
           direction='row' 
           flexWrap='wrap'
+          textAlign='center'
         >
-          <Box sx={{textAlign: 'center'}}>
-            <DownhillSkiingOutlinedIcon sx={{fontSize: '3rem'}}/>
-            <Typography variant='h3' textAlign='center'>
+          <Box>
+            {/* <DownhillSkiingOutlinedIcon sx={{fontSize: '3rem'}}/> */}
+            <Typography variant='h4' sx={{wordBreak: 'break-word'}}>
               Wintersportunion Oepping
             </Typography>
           </Box>
           <Divider sx={{ width: '80%' }} />
           <CardComponent>
-            <Typography variant='h4'>
+            <Typography variant='h5'>
               Foto
             </Typography>
             <img 
@@ -49,18 +51,24 @@ export default function Home() {
               }} 
               src={imgUrl}
             />
+            <Typography variant='h6'>
+              Statischer Link
+            </Typography>
+            <Link variant='body1' href={staticImgUrl}>
+              {staticImgUrl}
+            </Link>
             <Button 
-              variant='contained'
-              href={imgUrl}
+              onClick={() => navigator.clipboard.writeText(staticImgUrl)}
+              variant='outlined'
             >
-              Aktuelles Foto (Link für current.jpg)
+              Kopieren
             </Button>
-            <Typography variant='body1' textAlign='center'>
-              Anmerkung link: ?t=(nummer) braucht ma nd, is nur dass nd vom browser cache bezogen wird.
+            <Typography variant='body1'>
+              Wird alle 60s aktualisiert.
             </Typography>
           </CardComponent>
           <CardComponent>
-            <Typography variant='h4'>
+            <Typography variant='h5'>
               Live Stream
             </Typography>
             <iframe
@@ -69,11 +77,23 @@ export default function Home() {
                 aspectRatio: '16 / 9', 
                 borderRadius: MuiTheme.shape.borderRadius
               }}
-              src={`https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1`}
+              src={`https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&mute=1`}
               frameBorder="0"
               allowFullScreen
               title="Livestream"
             />
+            <Typography variant='h6'>
+              Statischer Link
+            </Typography>
+            <Link variant='body1' href={staticStreamUrl}>
+              {staticStreamUrl}
+            </Link>
+            <Button
+              onClick={() => navigator.clipboard.writeText(staticStreamUrl)}
+              variant='outlined'
+            >
+              Kopieren
+            </Button>
           </CardComponent>
         </Stack>
       </Content>
