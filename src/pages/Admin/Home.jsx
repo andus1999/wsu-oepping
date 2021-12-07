@@ -82,12 +82,12 @@ export default function Home() {
             </Typography>
             <TextField 
               sx={{width: '100%'}}
-              label='Kamera Benutzer' 
+              label='Benutzer' 
               onChange={(e) => setData({...data, cam_user: e.target.value})}
               defaultValue={data.cam_user}
             />
             <TextField 
-              label='Kamera Passwort' 
+              label='Passwort' 
               type={showPass ? 'text' : 'password'}
               onChange={(e) => setData({ ...data, cam_password: e.target.value })}
               defaultValue={data.cam_password}
