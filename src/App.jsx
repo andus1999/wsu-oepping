@@ -1,5 +1,6 @@
 import './App.css';
-import Home from './pages/Home';
+import Visitor from './pages/Routes/Visitor';
+import Admin from './pages/Routes/Admin';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import {
   BrowserRouter,
@@ -9,12 +10,14 @@ import {
 import MuiTheme from './styles/MuiTheme';
 
 function App() {
+  const subDomain = window.location.hostname.split('.')[0]
   return (
     <>
       <ThemeProvider theme={MuiTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path='/' exact element={<Home />} />
+            {subDomain === 'admin' ? <Route path='/' exact element={<Admin />} />
+            : <Route path='/' exact element={<Visitor />} />}
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

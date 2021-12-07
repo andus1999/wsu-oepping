@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Stack, Typography, Box } from '@mui/material'
 import React from 'react'
 import Colors from '../../styles/Colors'
 import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
@@ -11,6 +11,7 @@ export default function Footer() {
           height: '300px',
           marginTop: '30px',
           background: Colors.primary,
+          boxShadow: `0 50vh 0 50vh ${Colors.primary}`,
         }}
         gap='20px'
         alignItems='center'

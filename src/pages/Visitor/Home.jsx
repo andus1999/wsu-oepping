@@ -1,12 +1,12 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Button, Stack, Box, Divider, Link } from '@mui/material';
-import Footer from '../components/basic/Footer';
-import UiOverlay from '../components/basic/UiOverlay';
-import Content from '../components/basic/Content';
-import CardComponent from '../components/basic/CardComponent';
+import Footer from '../../components/basic/Footer';
+import UiOverlay from '../../components/basic/UiOverlay';
+import Content from '../../components/basic/Content';
+import CardComponent from '../../components/basic/CardComponent';
 import DownhillSkiingOutlinedIcon from '@mui/icons-material/DownhillSkiingOutlined';
-import MuiTheme from '../styles/MuiTheme';
+import MuiTheme from '../../styles/MuiTheme';
 
 export default function Home() {
   const staticImgUrl = "https://storage.googleapis.com/wsu-oepping.appspot.com/live/current.jpg"
