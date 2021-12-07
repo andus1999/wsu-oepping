@@ -10,14 +10,13 @@ import {
 import MuiTheme from './styles/MuiTheme';
 
 function App() {
-  const subDomain = window.location.hostname.split('.')[0]
   return (
     <>
       <ThemeProvider theme={MuiTheme}>
         <BrowserRouter>
           <Routes>
-            {subDomain === 'admin' ? <Route path='/' exact element={<Admin />} />
-            : <Route path='/' exact element={<Visitor />} />}
+            <Route path='/admin/*' element={<Admin />} />
+            <Route path='/' exact element={<Visitor />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
