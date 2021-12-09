@@ -75,7 +75,13 @@ export default function Home() {
         <Typography variant='h4'>
           Live Stream
         </Typography>
-        <Stack justifyContent='center' gap='20px 3%' direction='row'>
+        <Stack 
+          justifyContent='center' 
+          gap='20px 3%' 
+          direction='row' 
+          flexWrap='wrap' 
+          width='95%'
+        >
           <Stack alignItems='center' gap='20px 3%'>
             <Typography variant='h6'>
               Kamera Einstellungen
