@@ -108,7 +108,7 @@ export default function Home() {
           </Stack>
           <Stack alignItems='center' gap='20px 3%'>
             <Typography variant='h6'>
-              Facebook Einstellungen
+              Youtube Einstellungen
             </Typography>
             <TextField 
               label='Stream Schlüssel' 
