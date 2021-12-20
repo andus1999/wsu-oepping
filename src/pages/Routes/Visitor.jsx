@@ -3,12 +3,12 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Home from '../Visitor/Home';
+import UnderConstruction from '../Visitor/UnderConstruction';
 
 export default function Visitor() {
   return (
     <Routes>
-      <Route path='/' exact element={<Home />} />
+      <Route path='/' exact element={<UnderConstruction />} />
     </Routes>
   )
 }
