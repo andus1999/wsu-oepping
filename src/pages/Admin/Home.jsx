@@ -15,25 +15,24 @@ import Footer from '../../components/basic/Footer';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { collection, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import { collection, getDocs, getFirestore, setDoc, query, limit, onSnapshot, QuerySnapshot } from "firebase/firestore";
 
 export default function Home() {
-  const [documents, setDocuments] = React.useState(null);
+  const [ref, setRef] = React.useState(null);
   const [data, setData] = React.useState(null);
   const [showPass, setShowPass] = React.useState(false);
-  const n = 0
 
   const db = getFirestore();
 
-  React.useEffect(async () => {
-    const querySnapshot = await getDocs(collection(db, "stream_settings"));
-    const docs = []
-    querySnapshot.forEach((d) => {
-      docs.push(d);
+  React.useEffect(() => {
+    const q = query(collection(db, "stream_settings"), limit(1));
+    const unsubscribe = onSnapshot(q, snap => {
+      setData(snap.docs[0].data())
+      setRef(snap.docs[0].ref)
     });
-    setDocuments(docs);
-    setData(docs[n].data());
-  }, [])
+
+    return () => unsubscribe()
+  }, []);
 
   const out = () => {
     const auth = getAuth();
@@ -44,9 +43,9 @@ export default function Home() {
 
   const updateData = async (run) => {
     data.run = run;
-    setData({...data});
-    const docRef = documents[n].ref;
-    await setDoc(docRef, data);
+    if (ref != null) {
+      await setDoc(ref, data);
+    }
   }
 
   const endAdornment = (
