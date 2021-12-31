@@ -15,23 +15,32 @@ import Footer from '../../components/basic/Footer';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { collection, getDocs, getFirestore, setDoc, query, limit, onSnapshot, QuerySnapshot } from "firebase/firestore";
+import { collection, getDocs, getFirestore, setDoc, query, limit, onSnapshot, QuerySnapshot, doc } from "firebase/firestore";
+import LogList from '../../components/basic/admin/LogList';
 
 export default function Home() {
   const [ref, setRef] = React.useState(null);
   const [data, setData] = React.useState(null);
+  const [logs, setLogs] = React.useState(null);
   const [showPass, setShowPass] = React.useState(false);
 
   const db = getFirestore();
 
   React.useEffect(() => {
     const q = query(collection(db, "stream_settings"), limit(1));
+    const logRef = doc(db, 'logs', '34556974893749');
     const unsubscribe = onSnapshot(q, snap => {
       setData(snap.docs[0].data())
       setRef(snap.docs[0].ref)
     });
+    const unsubscribeLogs = onSnapshot(logRef, d => {
+      setLogs(d.data())
+    });
 
-    return () => unsubscribe()
+    return () => {
+      unsubscribe()
+      unsubscribeLogs()
+    }
   }, []);
 
   const out = () => {
@@ -137,6 +146,8 @@ export default function Home() {
           </Button>
         </Stack>
         <Divider width='50%'/>
+        {logs != null && <LogList logs={logs} />}
+        <Divider width='50%' />
         <Button variant='outlined' onClick={out}>
           Abmelden
         </Button>
