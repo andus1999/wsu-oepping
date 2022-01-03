@@ -3,13 +3,14 @@ import React from 'react'
 
 export default function LogList({logs}) {
   const getBody = (it) => `${it.message} - ${new Date(it.timestamp * 1000).toLocaleString('de-DE')}`
-  const infos = logs.info ? logs.info.slice(-10).map((it) => (<ListItem>
+  const maxEntries = 5;
+  const infos = logs.info ? logs.info.slice(-maxEntries).map((it) => (<ListItem>
     <ListItemText primary={it.source} secondary={getBody(it)}/>
   </ListItem>)) : null
-  const warnings = logs.warning ? logs.warning.slice(-10).map((it) => (<ListItem>
+  const warnings = logs.warning ? logs.warning.slice(-maxEntries).map((it) => (<ListItem>
     <ListItemText primary={it.source} secondary={getBody(it)} />
   </ListItem>)) : null
-  const errors = logs.error ? logs.error.slice(-10).map((it) => (<ListItem>
+  const errors = logs.error ? logs.error.slice(-maxEntries).map((it) => (<ListItem>
     <ListItemText primary={it.source} secondary={getBody(it)} />
   </ListItem>)) : null
   return (
