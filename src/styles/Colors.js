@@ -11,11 +11,12 @@ import {
   lightBlue,
 } from '@mui/material/colors';
 
+const primary = blue;
+
 const Colors = {
-  primary: blue['A400'],
-  primaryLight: teal[300],
-  red: pink['A400'],
-  orange: orange[500],
+  primary: primary[500],
+  primaryLight: primary[300],
+  red: pink[500],
   white: '#ffffff',
   black: '#000000',
   milk: '#ffffff99',
