@@ -10,10 +10,10 @@ import CastIcon from '@mui/icons-material/Cast';
 import CastConnectedIcon from '@mui/icons-material/CastConnected';
 import Colors from '../../../../styles/Colors';
 
-export default function Status({ data, ref }) {
+export default function Status({ data, docRef }) {
   const updateData = async (run) => {
-    if (ref != null) {
-      await setDoc(ref, { run }, { merge: true });
+    if (docRef != null) {
+      await setDoc(docRef, { run }, { merge: true });
     }
   }
   return <>

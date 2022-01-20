@@ -46,7 +46,8 @@ export default function SponsorBanner({docRef}) {
   }
 
   const onDelete = () => {
-    deleteObject(storageRef).then(() => {
+    deleteObject(storageRef).then(async () => {
+      await updateData();
       setBannerMessage("Bild gelöscht");
       setMessageColor("success");
     }).catch((error) => {

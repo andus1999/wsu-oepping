@@ -8,27 +8,27 @@ export default function LogList() {
   const db = getFirestore();
 
   React.useEffect(() => {
-    // const logRef = doc(db, 'logs', 'camera1');
-    const logRef = collection(db, 'logs');
-    const unsubscribe = onSnapshot(logRef, c => {
-      let info = [];
-      let warning = [];
-      let error = [];
-      c.forEach((doc) => {
-        const d = doc.data();
-        d.info && (info = info.concat(d.info));
-        d.warning && (warning = warning.concat(d.warning));
-        d.error && (error = error.concat(d.error));
-      });
-      info.sort((a, b) => a.timestamp - b.timestamp);
-      warning.sort((a, b) => a.timestamp - b.timestamp);
-      error.sort((a, b) => a.timestamp - b.timestamp);
-      const logData = {};
-      info.length && (logData['info'] = info);
-      warning.length && (logData['warning'] = warning);
-      error.length && (logData['error'] = error);
-      setLogs(logData);
-      //setLogs(d.data());
+    const logRef = doc(db, 'logs', 'camera1');
+    // const logRef = collection(db, 'logs');
+    const unsubscribe = onSnapshot(logRef, d => {
+      // let info = [];
+      // let warning = [];
+      // let error = [];
+      // c.forEach((doc) => {
+      //   const d = doc.data();
+      //   d.info && (info = info.concat(d.info));
+      //   d.warning && (warning = warning.concat(d.warning));
+      //   d.error && (error = error.concat(d.error));
+      // });
+      // info.sort((a, b) => a.timestamp - b.timestamp);
+      // warning.sort((a, b) => a.timestamp - b.timestamp);
+      // error.sort((a, b) => a.timestamp - b.timestamp);
+      // const logData = {};
+      // info.length && (logData['info'] = info);
+      // warning.length && (logData['warning'] = warning);
+      // error.length && (logData['error'] = error);
+      // setLogs(logData);
+      setLogs(d.data());
     });
 
     return unsubscribe
