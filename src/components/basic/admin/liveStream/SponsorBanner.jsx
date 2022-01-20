@@ -4,7 +4,7 @@ import { setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 export default function SponsorBanner({docRef}) {
-  const [src, setSrc] = React.useState("");
+  const [src, setSrc] = React.useState(null);
   const [bannerMessage, setBannerMessage] = React.useState("");
   const [fileSelected, setFileSelected] = React.useState(false);
   const [messageColor, setMessageColor] = React.useState('info');
@@ -22,7 +22,7 @@ export default function SponsorBanner({docRef}) {
 
   getDownloadURL(storageRef)
     .then((url) => {
-      setSrc(url);
+      if (src == null) setSrc(url);
       setFileExists(true);
     })
     .catch((error) => {
