@@ -20,9 +20,9 @@ export default function SponsorBanner({docRef}) {
     }
   }
 
-  getDownloadURL(storageRef)
+  if (src == null) getDownloadURL(storageRef)
     .then((url) => {
-      if (src == null) setSrc(url);
+      setSrc(url);
       setFileExists(true);
     })
     .catch((error) => {
@@ -36,6 +36,7 @@ export default function SponsorBanner({docRef}) {
       setMessageColor('info');
       uploadBytes(storageRef, file).then(async (snapshot) => {
         await updateData();
+        setFileSelected(false);
         setBannerMessage("Bild erfolgreich hochgeladen")
         setMessageColor('success');
       })
@@ -112,7 +113,7 @@ export default function SponsorBanner({docRef}) {
       {fileSelected && <Button onClick={onUpload}>
         Hochladen
       </Button>}
-      {fileExists && <Button onClick={onDelete}>
+      {(fileExists && !fileSelected) && <Button onClick={onDelete}>
         Overlay Löschen
       </Button>}
     </Stack>
