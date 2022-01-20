@@ -48,10 +48,10 @@ export default function Home() {
         {(data && ref) ? (<Stack
           alignItems='center'
           gap='40px'
-          width='95%'
+          width='90%'
           maxWidth='1200px'
         >
-          <Typography variant='h4'>
+          <Typography variant='h4' textAlign='center'>
             Live Stream
           </Typography>
           <Divider width='50%' />

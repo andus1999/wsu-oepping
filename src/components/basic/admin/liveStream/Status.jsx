@@ -27,7 +27,7 @@ export default function Status({ data, ref }) {
       <Typography variant='h5' marginBottom='20px'>
         {data.run ? 'Ein' : 'Aus'}
       </Typography>
-      <Stack direction='row' gap='10px 20px'>
+      <Stack direction='row' gap='10px 20px' flexWrap='wrap' justifyContent='center'>
         <Button onClick={() => updateData(true)}>
           Starten
         </Button>
