@@ -1,65 +1,36 @@
 import React from 'react'
 import { getAuth, signOut } from "firebase/auth";
-import { 
-  Button, 
-  CircularProgress, 
-  Divider, 
-  Stack, 
-  TextField, 
-  InputAdornment,
-  IconButton,
-  Typography 
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Header from '../../components/basic/Header';
 import Footer from '../../components/basic/Footer';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 import { collection, getDocs, getFirestore, setDoc, query, limit, onSnapshot, QuerySnapshot, doc } from "firebase/firestore";
-import LogList from '../../components/basic/admin/LogList';
+import LogList from '../../components/basic/admin/liveStream/LogList';
+import SponsorBanner from '../../components/basic/admin/liveStream/SponsorBanner';
+import Settings from '../../components/basic/admin/liveStream/Settings';
+import Status from '../../components/basic/admin/liveStream/Status';
 
 export default function Home() {
-  const [ref, setRef] = React.useState(null);
   const [data, setData] = React.useState(null);
-  const [logs, setLogs] = React.useState(null);
-  const [showPass, setShowPass] = React.useState(false);
+  const [ref, setRef] = React.useState(null);
 
   const db = getFirestore();
 
   React.useEffect(() => {
     const q = query(collection(db, "stream_settings"), limit(1));
-    // const logRef = doc(db, 'logs', 'camera1');
-    const logRef = collection(db, 'logs');
     const unsubscribe = onSnapshot(q, snap => {
       setData(snap.docs[0].data())
       setRef(snap.docs[0].ref)
     });
-    const unsubscribeLogs = onSnapshot(logRef, c => {
-      let info = [];
-      let warning = [];
-      let error = [];
-      c.forEach((doc) => {
-        const d = doc.data();
-        d.info && (info = info.concat(d.info));
-        d.warning && (warning = warning.concat(d.warning));
-        d.error && (error = error.concat(d.error));
-      });
-      info.sort((a, b) => a.timestamp - b.timestamp);
-      warning.sort((a, b) => a.timestamp - b.timestamp);
-      error.sort((a, b) => a.timestamp - b.timestamp);
-      const logData = {};
-      info.length && (logData['info'] = info);
-      warning.length && (logData['warning'] = warning);
-      error.length && (logData['error'] = error);
-      setLogs(logData);
-      //setLogs(d.data());
-    });
-
-    return () => {
-      unsubscribe()
-      unsubscribeLogs()
-    }
-  }, []);
+    return unsubscribe
+  }, [])
 
   const out = () => {
     const auth = getAuth();
@@ -68,113 +39,40 @@ export default function Home() {
     });
   }
 
-  const updateData = async (run) => {
-    data.run = run;
-    if (ref != null) {
-      await setDoc(ref, data);
-    }
-  }
-
-  const endAdornment = (
-    <InputAdornment position="end">
-      <IconButton
-        onClick={() => setShowPass(!showPass)}
-        edge="end"
-      >
-        {showPass ? <VisibilityOff /> : <Visibility />}
-      </IconButton>
-    </InputAdornment>
-  )
-
   return (
     <>
       <Header />
-      {data ? (<Stack 
-        alignItems='center' 
-        component="form" 
-        onSubmit={(e) => {
-          e.preventDefault()
-          updateData(data.run)
-        }}
-        gap='20px 3%'
-      >
-        <Typography variant='h4'>
-          Live Stream
-        </Typography>
-        <Stack 
-          justifyContent='center' 
-          gap='20px 3%' 
-          direction='row' 
-          flexWrap='wrap' 
+      <Stack
+        width='100%'
+        alignItems='center'>
+        {(data && ref) ? (<Stack
+          alignItems='center'
+          gap='40px'
           width='95%'
+          maxWidth='1200px'
         >
-          <Stack alignItems='center' gap='20px 3%'>
-            <Typography variant='h6'>
-              Kamera Einstellungen
-            </Typography>
-            <TextField 
-              sx={{width: '100%'}}
-              label='Benutzer' 
-              onChange={(e) => setData({...data, cam_user: e.target.value})}
-              defaultValue={data.cam_user}
-            />
-            <TextField 
-              label='Passwort' 
-              type={showPass ? 'text' : 'password'}
-              onChange={(e) => setData({ ...data, cam_password: e.target.value })}
-              defaultValue={data.cam_password}
-              InputProps={{endAdornment}}
-            />
-            <TextField 
-              sx={{ width: '100%' }}
-              label='IP-Adresse' 
-              onChange={(e) => setData({ ...data, cam_ip: e.target.value })}
-              defaultValue={data.cam_ip}
-            />
+          <Typography variant='h4'>
+            Live Stream
+          </Typography>
+          <Divider width='50%' />
+          <Status data={data} ref={ref} />
+          <Divider width='50%' />
+          <Stack width='100%' direction='row' flexWrap='wrap' gap='60px 20px' justifyContent='space-around'>
+            <SponsorBanner docRef={ref}/>
+            <Settings initializationData={data} docRef={ref}/>
           </Stack>
-          <Stack alignItems='center' gap='20px 3%'>
-            <Typography variant='h6'>
-              Youtube Einstellungen
-            </Typography>
-            <TextField 
-              label='Stream Schlüssel' 
-              type={showPass ? 'text' : 'password'} 
-              onChange={(e) => setData({ ...data, stream_key: e.target.value })}
-              defaultValue={data.stream_key}
-              InputProps={{ endAdornment }}
-            />
-          </Stack>
-        </Stack>
-        <Button type='submit' variant='outlined'>
-          Speichern
-        </Button>
-        <Divider sx={{ width: '50%' }} />
-        <Typography variant='h6'>
-          Status
-        </Typography>
-        <Typography variant='h5'>
-          {data.run ? 'Ein' : 'Aus'}
-        </Typography>
-        <Stack direction='row' gap='20px 10px'>
-          <Button variant='outlined' onClick={() => updateData(true)}>
-            Starten
-          </Button>
-          <Button variant='outlined' onClick={() => updateData(false)}>
-            Stoppen
+          <Divider width='50%' />
+          <LogList />
+          <Button onClick={out}>
+            Abmelden
           </Button>
         </Stack>
-        <Divider width='50%'/>
-        {logs != null && <LogList logs={logs} />}
-        <Divider width='50%' />
-        <Button variant='outlined' onClick={out}>
-          Abmelden
-        </Button>
+        ) : (
+          <Stack alignItems='center'>
+            <CircularProgress />
+          </Stack>
+        )}
       </Stack>
-      ) : (
-      <Stack alignItems='center'>
-        <CircularProgress/>
-      </Stack>  
-      )}
       <Footer />
     </>
   )

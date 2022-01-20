@@ -9,7 +9,13 @@ const MuiTheme = createTheme({
     },
     error: {
       main: Colors.red,
-    }
+    },
+    info: {
+      main: Colors.primary,
+    },
+    success: {
+      main: Colors.green,
+    },
   },
   shape: {
     borderRadius: 10,
@@ -37,7 +43,15 @@ const MuiTheme = createTheme({
       fontSize: '1.2rem',
     },
   },
-  components:{
+  props: {
+    
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: 'outlined',
+      },
+    },
     MuiDrawer: {
       styleOverrides: {
         paper: {

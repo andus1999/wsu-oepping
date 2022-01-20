@@ -14,9 +14,10 @@ import {
 const primary = blue;
 
 const Colors = {
-  primary: primary[500],
+  primary: primary[700],
   primaryLight: primary[300],
-  red: pink[500],
+  red: pink[400],
+  green: green[400],
   white: '#ffffff',
   black: '#000000',
   milk: '#ffffff99',
