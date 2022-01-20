@@ -113,7 +113,7 @@ export default function SponsorBanner({docRef}) {
         Hochladen
       </Button>}
       {fileExists && <Button onClick={onDelete}>
-        Löschen
+        Overlay Löschen
       </Button>}
     </Stack>
   </Stack>;
