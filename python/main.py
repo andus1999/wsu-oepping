@@ -127,7 +127,7 @@ class VideoStream(Stream):
                 stream = self.__open_live_stream()
 
             if time.time() - self.start_time > 300:
-                _log(LogEntry('info', 'Videoübertragung', 'Videoübertragung wird automatisch neu gestartet.'))
+                # _log(LogEntry('info', 'Videoübertragung', 'Videoübertragung wird automatisch neu gestartet.'))
 
                 os.killpg(os.getpgid(stream.pid), signal.SIGTERM)
 
