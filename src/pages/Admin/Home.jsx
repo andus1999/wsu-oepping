@@ -7,7 +7,7 @@ import {
 import Header from '../../components/basic/Header';
 import Footer from '../../components/basic/Footer';
 
-import LiveStream from '../../components/basic/admin/LiveStream';
+import LiveStream from '../../components/admin/LiveStream';
 
 export default function Home() {
   const out = () => {

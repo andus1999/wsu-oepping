@@ -8,7 +8,7 @@ import {
 
 import CastIcon from '@mui/icons-material/Cast';
 import CastConnectedIcon from '@mui/icons-material/CastConnected';
-import Colors from '../../../../styles/Colors';
+import Colors from '../../../styles/Colors';
 
 export default function Status({ data, docRef }) {
   const updateData = async (run) => {
@@ -21,8 +21,8 @@ export default function Status({ data, docRef }) {
       <Typography variant='h5'>
         Status
       </Typography>
-      {data.run ? 
-        <CastConnectedIcon sx={{ fontSize: 80, color: Colors.primary}}/> : 
+      {data.run ?
+        <CastConnectedIcon sx={{ fontSize: 80, color: Colors.primary }} /> :
         <CastIcon sx={{ fontSize: 80, color: Colors.black }} />}
       <Typography variant='h5' marginBottom='20px'>
         {data.run ? 'Ein' : 'Aus'}
