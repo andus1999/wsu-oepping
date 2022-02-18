@@ -22,6 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-python
+python/wsu-oepping-firebase-adminsdk.json
+python/__pycache__
+python/.idea
 
 BerryBase.pdf
