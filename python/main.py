@@ -76,11 +76,11 @@ class ImageStream(Stream):
 
     def __upload_frame(self):
         if os.path.exists('sponsor_banner.png'):
-            subprocess.call(f"ffmpeg -y -i {self._rtsp} -i sponsor_banner.png "
-                            f"-filter_complex 'overlay' "
-                            f"-vframes 1 current.jpg", shell=True, timeout=20)
+            subprocess.run(f"ffmpeg -y -i {self._rtsp} -i sponsor_banner.png "
+                           f"-filter_complex 'overlay' "
+                           f"-vframes 1 current.jpg", shell=True, timeout=20)
         else:
-            subprocess.call(f"ffmpeg -y -i {self._rtsp} -vframes 1 current.jpg", shell=True, timeout=20)
+            subprocess.run(f"ffmpeg -y -i {self._rtsp} -vframes 1 current.jpg", shell=True, timeout=20)
         blob = storage.bucket('wsu-oepping.appspot.com').blob('live/current.jpg')
         blob.upload_from_filename('current.jpg')
         blob.make_public()
@@ -93,6 +93,7 @@ class ImageStream(Stream):
                 start_time = time.time()
                 try:
                     self.__upload_frame()
+                    # _log(LogEntry('info', 'Bildübertragung', 'Bild aktualisiert'))
                 except Exception as e:
                     _log(LogEntry('warning', 'Bildübertragung', repr(e)))
 
