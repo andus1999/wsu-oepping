@@ -4,10 +4,10 @@ import { drawerWidth } from '../../resources/values'
 
 export default function Content({ children }) {
   return (
-    <Box 
+    <Box
       sx={{
-        marginLeft: {xs: '0px', sm: `${drawerWidth}px`},
-        padding: '3%'
+        marginLeft: { xs: '0px', sm: `${drawerWidth}px` },
+        padding: '3%',
       }}
     >
       {children}

@@ -40,14 +40,14 @@ export default function LogList() {
     <ListItemText primary={it.source} secondary={getBody(it)} />
   </ListItem>)) : null
   const warnings = logs?.warning ? logs.warning.slice(-maxEntries).map((it) => (<ListItem key={getBody(it)}>
-    <ListItemText primary={it.source} secondary={getBody(it)} />
+    <ListItemText primary={it.source} secondary={getBody(it)} secondaryTypographyProps={{ sx: { overflowWrap: 'break-word' } }} />
   </ListItem>)) : null
   const errors = logs?.error ? logs.error.slice(-maxEntries).map((it) => (<ListItem key={getBody(it)}>
     <ListItemText primary={it.source} secondary={getBody(it)} />
   </ListItem>)) : null
   return (
     <>
-      {logs && <Stack alignItems='center' gap='20px'>
+      {logs && <Stack alignItems='center' gap='20px' maxWidth='90%'>
         <Typography variant='h5'>
           Logs
         </Typography>
@@ -55,21 +55,21 @@ export default function LogList() {
         {errors && <><Typography variant='h6'>
           Fehler
         </Typography>
-          <List>
+          <List sx={{ maxWidth: '100%' }}>
             {errors}
           </List>
           <Divider width='20%' /></>}
         {warnings && <><Typography variant='h6'>
           Warnungen
         </Typography>
-          <List>
+          <List sx={{ maxWidth: '100%' }}>
             {warnings}
           </List>
           <Divider width='20%' /></>}
         {infos && <><Typography variant='h6'>
           Infos
         </Typography>
-          <List>
+          <List sx={{ maxWidth: '100%' }}>
             {infos}
           </List>
           <Divider width='20%' /></>}
