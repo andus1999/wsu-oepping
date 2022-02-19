@@ -122,7 +122,7 @@ class VideoStream(Stream):
             return_code = stream.poll()
             if return_code is not None:
                 _log(LogEntry('warning', 'Videoübertragung', f'Bei der Videoübertragung ist ein Fehler aufgetreten, '
-                                                             'es wird ein automatischer Neustart eingeleitet. Fehlercode: {return_code}'))
+                                                             f'es wird ein automatischer Neustart eingeleitet. Fehlercode: {return_code}'))
                 # _log(LogEntry('warning', 'Videoübertragung', 'Wenn die Zugangsdaten der Kamera falsch eingegeben '
                 #                                              'wurden, ist ein Neustart der Kamera notwendig'))
                 stream = self.__open_live_stream()
