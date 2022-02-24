@@ -18,9 +18,8 @@ export default function LiveStream() {
   const [data, setData] = React.useState(null);
   const [docRef, setDocRef] = React.useState(null);
 
-  const db = getFirestore();
-
   React.useEffect(() => {
+    const db = getFirestore();
     const q = query(collection(db, "stream_settings"), limit(1));
     const unsubscribe = onSnapshot(q, snap => {
       setData(snap.docs[0].data())
