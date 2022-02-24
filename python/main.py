@@ -127,7 +127,7 @@ class VideoStream(Stream):
                 #                                              'wurden, ist ein Neustart der Kamera notwendig'))
                 stream = self.__open_live_stream()
 
-            if time.time() - self.start_time > 300:
+            if time.time() - self.start_time > 1800:
                 # _log(LogEntry('info', 'Videoübertragung', 'Videoübertragung wird automatisch neu gestartet.'))
 
                 os.killpg(os.getpgid(stream.pid), signal.SIGTERM)
@@ -155,17 +155,20 @@ class WSUStream:
     def __on_snapshot(self, doc_snapshot, changes, read_time):
         self.__stop()
         data = doc_snapshot[0].to_dict()
-        if data['run'] is True:
-            rtsp = f'rtsp://{data["cam_user"]}:{data["cam_password"]}@{data["cam_ip"]}:554/Streaming/channels/' \
+        if data.get('run') is True:
+            rtsp = f'rtsp://{data.get("cam_user")}:{data.get("cam_password")}@{data.get("cam_ip")}:554/Streaming/channels/' \
                    f'001/?transportmode=unicast'
-            rtmp = f'rtmp://a.rtmp.youtube.com/live2/{data["stream_key"]}'
+            rtmp = f'rtmp://a.rtmp.youtube.com/live2/{data.get("stream_key")}'
             self.__start(rtsp, rtmp)
 
     def __update_state(self, state):
-        docs = list(self.__db.collection(u'stream_settings').limit(1).stream())
-        doc_id = docs[0].id
-        doc_ref = self.__db.collection(u'stream_settings').document(doc_id)
-        doc_ref.set({'run': state}, merge=True)
+        try:
+            docs = list(self.__db.collection(u'stream_settings').limit(1).stream())
+            doc_id = docs[0].id
+            doc_ref = self.__db.collection(u'stream_settings').document(doc_id)
+            doc_ref.set({'run': state}, merge=True)
+        except Exception as e:
+            _log('error', 'Hauptprogramm', repr(e))
 
     def __start(self, rtsp, rtmp):
         if self.__running is False:
@@ -185,11 +188,11 @@ class WSUStream:
             _log(LogEntry('info', 'Übertragung', 'Übertragung erfolgreich beendet'))
 
     def __toggle(self):
+        _log(LogEntry('info', 'Hauptprogramm', 'Knopf Betätigung registriert'))
         if not self.__running:
             self.__update_state(True)
         else:
             self.__update_state(False)
-        _log(LogEntry('info', 'Hauptprogramm', 'Knopf Betätigung registriert'))
 
     def shut_down(self):
         self.__stop()
@@ -199,14 +202,17 @@ class WSUStream:
 
 
 def _log(log_entry: LogEntry):
-    db = firestore.client()
-    doc_ref = db.collection(u'logs').document('camera1')
-    doc_ref.set({log_entry.category: firestore.ArrayUnion([log_entry.dict])}, merge=True)
+    try:
+        db = firestore.client()
+        doc_ref = db.collection(u'logs').document('camera1')
+        doc_ref.set({log_entry.category: firestore.ArrayUnion([log_entry.dict])}, merge=True)
+    except:
+        pass
 
 
 def _update_sponsor_banner():
-    blob = storage.bucket('wsu-oepping.appspot.com').blob('media/sponsor_banner.png')
     try:
+        blob = storage.bucket('wsu-oepping.appspot.com').blob('media/sponsor_banner.png')
         blob.download_to_filename('sponsor_banner.png')
         _log(LogEntry('info', 'Übertragung', 'Sponsoren Overlay erfolgreich aktualisiert'))
     except:
@@ -217,7 +223,10 @@ def _update_sponsor_banner():
 
 def run():
     global wsu_stream
-    wsu_stream = WSUStream()
+    try:
+        wsu_stream = WSUStream()
+    except Exception as e:
+        _log('error', 'Hauptprogramm', repr(e))
     while not wsu_stream.off:
         time.sleep(1)
 
