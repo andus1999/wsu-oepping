@@ -223,12 +223,19 @@ def _update_sponsor_banner():
 
 def run():
     global wsu_stream
+    reset_timer = time.time()
     try:
         wsu_stream = WSUStream()
     except Exception as e:
         _log('error', 'Hauptprogramm', repr(e))
     while not wsu_stream.off:
         time.sleep(1)
+        if time.time() - reset_timer > 3600 * 24 * 7:
+          try:
+            _log('info', 'Hauptprogramm', 'Betriebssystemneustart wird eingeleitet.')
+            os.system('reboot')
+          except:
+            _log('error', 'Hauptprogramm', repr(e))
 
 
 def shut_down():
