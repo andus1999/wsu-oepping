@@ -127,7 +127,7 @@ class VideoStream(Stream):
                 #                                              'wurden, ist ein Neustart der Kamera notwendig'))
                 stream = self.__open_live_stream()
 
-            if time.time() - self.start_time > 1800:
+            if time.time() - self.start_time > 300:
                 # _log(LogEntry('info', 'Videoübertragung', 'Videoübertragung wird automatisch neu gestartet.'))
 
                 os.killpg(os.getpgid(stream.pid), signal.SIGTERM)
